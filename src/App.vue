@@ -178,7 +178,7 @@ $border-color: rgb(218, 218, 218);
                 background: linear-gradient(to right, rgba(213, 74, 74, .5), #FFF);
               }
               &.none{
-                background: rgb(241, 241, 241);
+                background: linear-gradient(to right, rgb(201, 201, 201), #FFF);
               }
               cursor: pointer;
             }
