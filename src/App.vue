@@ -48,9 +48,8 @@
                 <div
                     class="sporting-item"
                     v-for="(item, idx) in sportingList"
-                    :class="{ active: item.active }"
+                    :class="{ active: item.active,win: item.win }"
                     @click="handleClickSportingItem(item)"
-                    :style="{ background: `conic-gradient(rgb(97, 152, 253), rgb(97, 152, 253) 70%, rgb(219, 219, 219) 70%%) ` }"
                 >
                   <img class="list-header" src="./assets/icon.jpg" height="50" width="50" />
                     {{ item.name }}
@@ -70,28 +69,36 @@ let isPublic = ref(true)
 let sportingList = reactive([
     {
         active: true,
-        name: "Heloworld"
+        name: "Heloworld",
+        win: true
     },
     {
-        name: "kitty"
+        name: "kitty",
+        win: true
     },
     {
-        name: "Tom jack"
+        name: "Tom jack",
+        win: true
     },
     {
-        name: "VMatrix"
+        name: "VMatrix",
+        win: true
     },
     {
-        name: "aaaaaa"
+        name: "aaaaaa",
+        win: false
     },
     {
-        name: "bbbbbb"
+        name: "bbbbbb",
+        win: false
     },
     {
-        name: "cccccc"
+        name: "cccccc",
+        win: false
     },
     {
-        name: "dddddd"
+        name: "dddddd",
+        win: false
     }
 ])
 
@@ -154,7 +161,21 @@ $border-color: rgb(218, 218, 218);
 
 
             &:not(.active):hover {
-                background: rgb(241, 241, 241);
+                //background: linear-gradient(to right, rgba(213, 74, 74, .5), #FFF);
+                //background: linear-gradient(to right, rgba(64, 181, 197, .5), #fff);
+              background: rgb(241, 241, 241);
+            }
+
+            &:not(.win):hover{
+              background: rgb(241, 241, 241);
+            }
+
+            &:not(.win) {
+              background: linear-gradient(to right, rgba(213, 74, 74, .5), #FFF);
+            }
+
+            &.win{
+              background: linear-gradient(to right, rgba(64, 181, 197, .5), #fff);
             }
 
             &.active {
@@ -162,7 +183,8 @@ $border-color: rgb(218, 218, 218);
                 border: 1px solid $border-color;
                 border-right: none;
                 border-radius: 5px 0 0 5px;
-                background: linear-gradient(to right, #1039d6, transparent);
+                //background: linear-gradient(to right, rgba(213, 74, 74, .5), #FFF);
+                background: linear-gradient(to right, rgba(64, 181, 197, .5), #fff);
               .list-header {
                 width: 50px;
                 height: 50px;
