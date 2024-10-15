@@ -44,24 +44,26 @@
         </div>
 
         <div class="box sporting-wrapper">
-
+          <div class="sporting">
             <div class="sporting-header">
             </div>
             <div class="sporting-list">
-                <div
-                    class="sporting-item"
-                    v-for="(item, idx) in sportingList"
-                    :class="{ active: item.active,
+              <div
+                  class="sporting-item"
+                  v-for="(item, idx) in sportingList"
+                  :class="{ active: item.active,
                     'success': item.win === Win.success,
                     'failed': item.win === Win.failed,
                     'none': item.win === Win.none,
                     }"
-                    @click="handleClickSportingItem(item)"
-                >
-                  <img class="list-header" src="./assets/icon.jpg" height="50" width="50" />
-                    {{ item.name }}
-                </div>
+                  @click="handleClickSportingItem(item)"
+              >
+                <img class="list-header" src="./assets/icon.jpg" height="50" width="50" />
+                {{ item.name }}
+              </div>
             </div>
+            <div class="sporting-footer"></div>
+          </div>
             <div class="sporting-detail"></div>
         </div>
     </div>
@@ -98,19 +100,7 @@ let sportingList = reactive([
         win: Win.failed
     },
     {
-        name: "aaaaaa",
-        win: Win.failed
-    },
-    {
         name: "bbbbbb",
-        win: Win.none
-    },
-    {
-        name: "cccccc",
-        win: Win.none
-    },
-    {
-        name: "dddddd",
         win: Win.none
     }
 ])
@@ -165,78 +155,88 @@ $border-color: rgb(218, 218, 218);
 
 .sporting-wrapper {
     display: flex;
-    flex-direction: column;
-    .sporting-header{
 
-      height: 50px;
-      width: 200px;
-    }
+    .sporting{
 
-    .sporting-list {
+      flex-direction: column;
+
+      .sporting-header{
+        height: 50px;
+        width: 200px;
+      }
+
+      .sporting-list {
         .sporting-item {
-            padding: 5px;
-            width: 200px;
-            border-radius: 5px;
-            background-color: white;
+          padding: 5px;
+          width: 200px;
+          border-radius: 5px;
+          background-color: white;
 
 
-            &:not(.active):hover {
-              &.success{
-                background: linear-gradient(to right, rgba(64, 181, 197, .5) 35%, #fff);
-              }
-              &.failed{
-                background: linear-gradient(to right, rgba(213, 74, 74, .5) 35%, #FFF);
-              }
-              &.none{
-                background: linear-gradient(to right, rgb(201, 201, 201) 35%, #FFF);
-              }
-              cursor: pointer;
+          &:not(.active):hover {
+            &.success{
+              background: linear-gradient(to right, rgba(64, 181, 197, .5) 35%, #fff);
+            }
+            &.failed{
+              background: linear-gradient(to right, rgba(213, 74, 74, .5) 35%, #FFF);
+            }
+            &.none{
+              background: linear-gradient(to right, rgb(201, 201, 201) 35%, #FFF);
+            }
+            cursor: pointer;
+          }
+
+          &.active {
+            position: relative;
+            border: 1px solid $border-color;
+            border-right: none;
+            border-radius: 5px 0 0 5px;
+            //background: linear-gradient(to right, rgba(213, 74, 74, .5), #FFF);
+            //background: linear-gradient(to right, rgba(64, 181, 197, .5), #fff);
+
+            &.success{
+              background: linear-gradient(to right, rgba(64, 181, 197, .5) 35%, #fff);
+            }
+            &.failed{
+              background: linear-gradient(to right, rgba(213, 74, 74, .5) 35%, #FFF);
+            }
+            &.none{
+              background: linear-gradient(to right, rgb(201, 201, 201) 35%, #FFF);
             }
 
-            &.active {
-                position: relative;
-                border: 1px solid $border-color;
-                border-right: none;
-                border-radius: 5px 0 0 5px;
-                //background: linear-gradient(to right, rgba(213, 74, 74, .5), #FFF);
-                //background: linear-gradient(to right, rgba(64, 181, 197, .5), #fff);
-
-              &.success{
-                background: linear-gradient(to right, rgba(64, 181, 197, .5) 35%, #fff);
-              }
-              &.failed{
-                background: linear-gradient(to right, rgba(213, 74, 74, .5) 35%, #FFF);
-              }
-              &.none{
-                background: linear-gradient(to right, rgb(201, 201, 201) 35%, #FFF);
-              }
-
-              .list-header {
-                width: 50px;
-                height: 50px;
-              }
-
-                &::after {
-                    position: absolute;
-                    content: "";
-                    background-color: white;
-                    width: 11px;
-                    border-left: none;
-                    border-right: none;
-                    top: -0.9px;
-                    bottom: -1px;
-                    right: -11px;
-                    border: 1px solid $border-color;
-                    border-left: none;
-                    border-right: none;
-                }
+            .list-header {
+              width: 50px;
+              height: 50px;
             }
 
-            &:not(:last-child) {
-                margin-bottom: 10px;
+            &::after {
+              position: absolute;
+              content: "";
+              background-color: white;
+              width: 11px;
+              border-left: none;
+              border-right: none;
+              top: -0.9px;
+              bottom: -1px;
+              right: -11px;
+              border: 1px solid $border-color;
+              border-left: none;
+              border-right: none;
             }
+          }
+
+          &:not(:last-child) {
+            margin-bottom: 10px;
+          }
         }
+      }
+
+      .sporting-footer {
+        height: 50px;
+        width: 200px;
+      }
     }
+
     .sporting-detail {
         // z-index: 2;
         margin-left: 10px;
