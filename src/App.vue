@@ -44,6 +44,9 @@
         </div>
 
         <div class="box sporting-wrapper">
+
+            <div class="sporting-header">
+            </div>
             <div class="sporting-list">
                 <div
                     class="sporting-item"
@@ -162,6 +165,13 @@ $border-color: rgb(218, 218, 218);
 
 .sporting-wrapper {
     display: flex;
+    flex-direction: column;
+    .sporting-header{
+
+      height: 50px;
+      width: 200px;
+    }
+
     .sporting-list {
         .sporting-item {
             padding: 5px;
@@ -172,13 +182,13 @@ $border-color: rgb(218, 218, 218);
 
             &:not(.active):hover {
               &.success{
-                background: linear-gradient(to right, rgba(64, 181, 197, .5), #fff);
+                background: linear-gradient(to right, rgba(64, 181, 197, .5) 35%, #fff);
               }
               &.failed{
-                background: linear-gradient(to right, rgba(213, 74, 74, .5), #FFF);
+                background: linear-gradient(to right, rgba(213, 74, 74, .5) 35%, #FFF);
               }
               &.none{
-                background: linear-gradient(to right, rgb(201, 201, 201), #FFF);
+                background: linear-gradient(to right, rgb(201, 201, 201) 35%, #FFF);
               }
               cursor: pointer;
             }
@@ -192,13 +202,13 @@ $border-color: rgb(218, 218, 218);
                 //background: linear-gradient(to right, rgba(64, 181, 197, .5), #fff);
 
               &.success{
-                background: linear-gradient(to right, rgba(64, 181, 197, .5), #fff);
+                background: linear-gradient(to right, rgba(64, 181, 197, .5) 35%, #fff);
               }
               &.failed{
-                background: linear-gradient(to right, rgba(213, 74, 74, .5), #FFF);
+                background: linear-gradient(to right, rgba(213, 74, 74, .5) 35%, #FFF);
               }
               &.none{
-                background: rgb(241, 241, 241);
+                background: linear-gradient(to right, rgb(201, 201, 201) 35%, #FFF);
               }
 
               .list-header {
