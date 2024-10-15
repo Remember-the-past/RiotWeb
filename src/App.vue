@@ -48,7 +48,11 @@
                 <div
                     class="sporting-item"
                     v-for="(item, idx) in sportingList"
-                    :class="{ active: item.active,win: item.win }"
+                    :class="{ active: item.active,
+                    'success': item.win === Win.success,
+                    'failed': item.win === Win.failed,
+                    'none': item.win === Win.none,
+                    }"
                     @click="handleClickSportingItem(item)"
                 >
                   <img class="list-header" src="./assets/icon.jpg" height="50" width="50" />
@@ -65,40 +69,46 @@ import { ref, reactive } from "vue"
 
 let ratio = ref(60)
 let isPublic = ref(true)
+const Win = {
+  success: 'success',
+  failed: 'failed',
+  none: 'none'
+}
+
 
 let sportingList = reactive([
     {
         active: true,
         name: "Heloworld",
-        win: true
+        win: Win.success
     },
     {
         name: "kitty",
-        win: true
+        win: Win.success
     },
     {
         name: "Tom jack",
-        win: true
+        win: Win.success
     },
     {
         name: "VMatrix",
-        win: true
+        win: Win.failed
     },
     {
         name: "aaaaaa",
-        win: false
+        win: Win.failed
     },
     {
         name: "bbbbbb",
-        win: false
+        win: Win.none
     },
     {
         name: "cccccc",
-        win: false
+        win: Win.none
     },
     {
         name: "dddddd",
-        win: false
+        win: Win.none
     }
 ])
 
@@ -161,21 +171,16 @@ $border-color: rgb(218, 218, 218);
 
 
             &:not(.active):hover {
-                //background: linear-gradient(to right, rgba(213, 74, 74, .5), #FFF);
-                //background: linear-gradient(to right, rgba(64, 181, 197, .5), #fff);
-              background: rgb(241, 241, 241);
-            }
-
-            &:not(.win):hover{
-              background: rgb(241, 241, 241);
-            }
-
-            &:not(.win) {
-              background: linear-gradient(to right, rgba(213, 74, 74, .5), #FFF);
-            }
-
-            &.win{
-              background: linear-gradient(to right, rgba(64, 181, 197, .5), #fff);
+              &.success{
+                background: linear-gradient(to right, rgba(64, 181, 197, .5), #fff);
+              }
+              &.failed{
+                background: linear-gradient(to right, rgba(213, 74, 74, .5), #FFF);
+              }
+              &.none{
+                background: rgb(241, 241, 241);
+              }
+              cursor: pointer;
             }
 
             &.active {
@@ -184,7 +189,18 @@ $border-color: rgb(218, 218, 218);
                 border-right: none;
                 border-radius: 5px 0 0 5px;
                 //background: linear-gradient(to right, rgba(213, 74, 74, .5), #FFF);
+                //background: linear-gradient(to right, rgba(64, 181, 197, .5), #fff);
+
+              &.success{
                 background: linear-gradient(to right, rgba(64, 181, 197, .5), #fff);
+              }
+              &.failed{
+                background: linear-gradient(to right, rgba(213, 74, 74, .5), #FFF);
+              }
+              &.none{
+                background: rgb(241, 241, 241);
+              }
+
               .list-header {
                 width: 50px;
                 height: 50px;
@@ -197,7 +213,7 @@ $border-color: rgb(218, 218, 218);
                     width: 11px;
                     border-left: none;
                     border-right: none;
-                    top: -1px;
+                    top: -0.9px;
                     bottom: -1px;
                     right: -11px;
                     border: 1px solid $border-color;
