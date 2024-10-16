@@ -68,7 +68,21 @@
                 </div>
                 <div class="sporting-footer"></div>
             </div>
-            <div class="sporting-detail"></div>
+            <div class="sporting-detail">
+                <div class="sporting-title">
+                    <div class="vsdata-type">
+                        <div
+                            class="vsdata-type-item"
+                            v-for="(item) in vsdatatypeList"
+                            :class="{ key: item.key}"
+                        >
+                            {{ item.key }}
+                        </div>
+                    </div>
+                </div>
+                <div class="sporting-info">
+                </div>
+            </div>
         </div>
     </div>
 </template>
@@ -83,6 +97,14 @@ const Win = {
     failed: 'failed',
     none: 'none'
 }
+
+let vsdatatypeList = reactive([
+    {
+        key: "时间"
+    },{
+        key: "类型"
+    }
+])
 
 
 let sportingList = reactive([
@@ -177,18 +199,22 @@ $border-color: rgb(218, 218, 218);
         flex-direction: column;
 
         .sporting-header {
-            height: 25px;
+            height: 35px;
             width: 200px;
             display: flex;
             justify-content: flex-end;
+
+            .sporting-header-title:hover {
+                height: 100px;
+                width: 100px;
+                color: #0b0b0b;
+            }
 
             .sporting-header-title {
                 display: flex;
                 align-items: center;
                 height: 16px;
                 width: 53px;
-
-
             }
         }
 
@@ -275,6 +301,18 @@ $border-color: rgb(218, 218, 218);
         flex: auto;
         border: 1px solid $border-color;
         border-radius: 0 5px 5px 0;
+
+        .sporting-title {
+            display: flex;
+            height: 70px;
+
+            .vsdata-type{
+                display: flex;
+                height: 45px;
+                width: 110px;
+                background: linear-gradient(to right, rgba(213, 74, 74, .5) 35%, #FFF);
+            }
+        }
     }
 }
 </style>
