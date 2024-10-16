@@ -1,6 +1,6 @@
 <template>
     <div class="container">
-        <br />
+        <br/>
         <div class="box">
             <div class="profile-bar">
                 <div class="header-wrapper">
@@ -8,7 +8,7 @@
                         class="icon-wrapper"
                         :style="{ background: `conic-gradient(rgb(97, 152, 253), rgb(97, 152, 253) ${ratio}%, rgb(219, 219, 219) ${ratio}%) ` }"
                     >
-                        <img class="header" src="./assets/icon.jpg" />
+                        <img class="header" src="./assets/icon.jpg"/>
                     </div>
                     <div class="score">331</div>
                 </div>
@@ -33,8 +33,7 @@
                         </span>
                     </div>
                     <div class="tag is-size-6">
-                        <font-awesome-icon icon="fas fa-angry" />
-                        <font-awesome-icon icon="user-secret" />
+                        <font-awesome-icon icon="user-secret"/>
                         <span>&nbsp;</span>
                         联盟二区
                     </div>
@@ -44,40 +43,45 @@
         </div>
 
         <div class="box sporting-wrapper">
-          <div class="sporting">
-            <div class="sporting-header">
-            </div>
-            <div class="sporting-list">
-              <div
-                  class="sporting-item"
-                  v-for="(item, idx) in sportingList"
-                  :class="{ active: item.active,
+            <div class="sporting">
+                <div class="sporting-header">
+                    <div class="sporting-header-title">
+                        <font-awesome-icon :icon="['fas', 'filter']"/>
+                        <span>&nbsp;</span>
+                        筛选
+                    </div>
+                </div>
+                <div class="sporting-list">
+                    <div
+                        class="sporting-item"
+                        v-for="(item, idx) in sportingList"
+                        :class="{ active: item.active,
                     'success': item.win === Win.success,
                     'failed': item.win === Win.failed,
                     'none': item.win === Win.none,
                     }"
-                  @click="handleClickSportingItem(item)"
-              >
-                <img class="list-header" src="./assets/icon.jpg" height="50" width="50" />
-                {{ item.name }}
-              </div>
+                        @click="handleClickSportingItem(item)"
+                    >
+                        <img class="list-header" src="./assets/icon.jpg" height="50" width="50"/>
+                        {{ item.name }}
+                    </div>
+                </div>
+                <div class="sporting-footer"></div>
             </div>
-            <div class="sporting-footer"></div>
-          </div>
             <div class="sporting-detail"></div>
         </div>
     </div>
 </template>
 
 <script setup>
-import { ref, reactive } from "vue"
+import {ref, reactive} from "vue"
 
 let ratio = ref(60)
 let isPublic = ref(true)
 const Win = {
-  success: 'success',
-  failed: 'failed',
-  none: 'none'
+    success: 'success',
+    failed: 'failed',
+    none: 'none'
 }
 
 
@@ -102,6 +106,14 @@ let sportingList = reactive([
     {
         name: "bbbbbb",
         win: Win.none
+    },
+    {
+        name: "aaaaaaa",
+        win: Win.none
+    },
+    {
+        name: "6666666",
+        win: Win.success
     }
 ])
 
@@ -117,23 +129,27 @@ $border-color: rgb(218, 218, 218);
 .profile-bar {
     display: flex;
     padding-left: 30px;
+
     .header-wrapper {
         width: 100px;
         padding-top: 30px;
         display: flex;
         flex-direction: column;
         align-items: center;
+
         .icon-wrapper {
             height: 100px;
             border-radius: 99px;
             background: conic-gradient(rgb(97, 152, 253), rgb(97, 152, 253) 30%, rgb(219, 219, 219) 30%);
             padding: 5px;
+
             .header {
                 width: 100%;
                 height: 100%;
                 border-radius: 99px;
             }
         }
+
         .score {
             font-size: 13px;
             margin-top: 5px;
@@ -144,6 +160,7 @@ $border-color: rgb(218, 218, 218);
             border-radius: 8px;
         }
     }
+
     .summoner-info {
         margin-left: 30px;
         display: flex;
@@ -156,85 +173,100 @@ $border-color: rgb(218, 218, 218);
 .sporting-wrapper {
     display: flex;
 
-    .sporting{
+    .sporting {
+        flex-direction: column;
 
-      flex-direction: column;
+        .sporting-header {
+            height: 25px;
+            width: 200px;
+            display: flex;
+            justify-content: flex-end;
 
-      .sporting-header{
-        height: 50px;
-        width: 200px;
-      }
-
-      .sporting-list {
-        .sporting-item {
-          padding: 5px;
-          width: 200px;
-          border-radius: 5px;
-          background-color: white;
+            .sporting-header-title {
+                display: flex;
+                align-items: center;
+                height: 16px;
+                width: 53px;
 
 
-          &:not(.active):hover {
-            &.success{
-              background: linear-gradient(to right, rgba(64, 181, 197, .5) 35%, #fff);
             }
-            &.failed{
-              background: linear-gradient(to right, rgba(213, 74, 74, .5) 35%, #FFF);
-            }
-            &.none{
-              background: linear-gradient(to right, rgb(201, 201, 201) 35%, #FFF);
-            }
-            cursor: pointer;
-          }
-
-          &.active {
-            position: relative;
-            border: 1px solid $border-color;
-            border-right: none;
-            border-radius: 5px 0 0 5px;
-            //background: linear-gradient(to right, rgba(213, 74, 74, .5), #FFF);
-            //background: linear-gradient(to right, rgba(64, 181, 197, .5), #fff);
-
-            &.success{
-              background: linear-gradient(to right, rgba(64, 181, 197, .5) 35%, #fff);
-            }
-            &.failed{
-              background: linear-gradient(to right, rgba(213, 74, 74, .5) 35%, #FFF);
-            }
-            &.none{
-              background: linear-gradient(to right, rgb(201, 201, 201) 35%, #FFF);
-            }
-
-            .list-header {
-              width: 50px;
-              height: 50px;
-            }
-
-            &::after {
-              position: absolute;
-              content: "";
-              background-color: white;
-              width: 11px;
-              border-left: none;
-              border-right: none;
-              top: -0.9px;
-              bottom: -1px;
-              right: -11px;
-              border: 1px solid $border-color;
-              border-left: none;
-              border-right: none;
-            }
-          }
-
-          &:not(:last-child) {
-            margin-bottom: 10px;
-          }
         }
-      }
 
-      .sporting-footer {
-        height: 50px;
-        width: 200px;
-      }
+        .sporting-list {
+            .sporting-item {
+                padding: 5px;
+                width: 200px;
+                border-radius: 5px;
+                background-color: white;
+
+
+                &:not(.active):hover {
+                    &.success {
+                        background: linear-gradient(to right, rgba(64, 181, 197, .5) 35%, #fff);
+                    }
+
+                    &.failed {
+                        background: linear-gradient(to right, rgba(213, 74, 74, .5) 35%, #FFF);
+                    }
+
+                    &.none {
+                        background: linear-gradient(to right, rgb(201, 201, 201) 35%, #FFF);
+                    }
+
+                    cursor: pointer;
+                }
+
+                &.active {
+                    position: relative;
+                    border: 1px solid $border-color;
+                    border-right: none;
+                    border-radius: 5px 0 0 5px;
+                    //background: linear-gradient(to right, rgba(213, 74, 74, .5), #FFF);
+                    //background: linear-gradient(to right, rgba(64, 181, 197, .5), #fff);
+
+                    &.success {
+                        background: linear-gradient(to right, rgba(64, 181, 197, .5) 35%, #fff);
+                    }
+
+                    &.failed {
+                        background: linear-gradient(to right, rgba(213, 74, 74, .5) 35%, #FFF);
+                    }
+
+                    &.none {
+                        background: linear-gradient(to right, rgb(201, 201, 201) 35%, #FFF);
+                    }
+
+                    .list-header {
+                        width: 50px;
+                        height: 50px;
+                    }
+
+                    &::after {
+                        position: absolute;
+                        content: "";
+                        background-color: white;
+                        width: 11px;
+                        border-left: none;
+                        border-right: none;
+                        top: -0.9px;
+                        bottom: -1px;
+                        right: -11px;
+                        border: 1px solid $border-color;
+                        border-left: none;
+                        border-right: none;
+                    }
+                }
+
+                &:not(:last-child) {
+                    margin-bottom: 10px;
+                }
+            }
+        }
+
+        .sporting-footer {
+            height: 50px;
+            width: 200px;
+        }
     }
 
     .sporting-detail {
