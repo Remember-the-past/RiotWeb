@@ -85,6 +85,24 @@
                     </div>
                 </div>
                 <div class="sporting-info">
+                    <div
+                        v-for="info in sportingInfoList"
+                        :class="{
+                            'sporting-info-Win':info.type==1,
+                            'sporting-info-Fail':info.type==0
+                        }">
+                        <div class="sporting-info-item">
+                            <div class="team-data-hd">
+                                xxxx xxxx xxxx xxxx xxxx
+                            </div>
+                            <div class="team-data-bd"
+                                v-for="(item) in termData"
+                                 :class="{aaa : item.aaa,bbb : item.bbb,ccc : item.ccc,ddd : item.ddd}"
+                            >
+                            {{ item.aaa }} {{ item.bbb }} {{ item.ccc }} {{ item.ddd }}
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -102,17 +120,54 @@ const Win = {
     none: 'none'
 }
 
+const sportingInfoList = ref([
+    {
+        type: 1
+    }, {
+        type: 0
+    }
+])
+
+let termData = reactive([
+    {
+        aaa: "aaa",
+        bbb: "bbb",
+        ccc: "ccc",
+        ddd: "ddd"
+    }, {
+        aaa: "aaa",
+        bbb: "bbb",
+        ccc: "ccc",
+        ddd: "ddd"
+    }, {
+        aaa: "aaa",
+        bbb: "bbb",
+        ccc: "ccc",
+        ddd: "ddd"
+    }, {
+        aaa: "aaa",
+        bbb: "bbb",
+        ccc: "ccc",
+        ddd: "ddd"
+    }, {
+        aaa: "aaa",
+        bbb: "bbb",
+        ccc: "ccc",
+        ddd: "ddd"
+    }
+])
+
 let vsdatatypeList = reactive([
     {
         key: "时间",
         value: "11-11 11:11"
-    },{
+    }, {
         key: "类型",
         value: "这是一个类型"
-    },{
+    }, {
         key: "比赛时长",
         value: "111分钟"
-    },{
+    }, {
         key: "击杀",
         value: "111/111"
     }
@@ -160,7 +215,7 @@ function handleClickSportingItem(item) {
 <style lang="scss" scoped>
 $border-color: rgb(218, 218, 218);
 
-.profile{
+.profile {
 
     display: flex;
     //height: 180px;
@@ -210,7 +265,6 @@ $border-color: rgb(218, 218, 218);
 }
 
 
-
 .sporting-wrapper {
     display: flex;
 
@@ -224,8 +278,8 @@ $border-color: rgb(218, 218, 218);
             justify-content: flex-end;
 
             .sporting-header-title:hover {
-                .sporting-header-title-filter{
-                    display:inline-block;
+                .sporting-header-title-filter {
+                    display: inline-block;
                 }
             }
 
@@ -235,7 +289,7 @@ $border-color: rgb(218, 218, 218);
                 height: 16px;
                 width: 53px;
 
-                .sporting-header-title-filter{
+                .sporting-header-title-filter {
                     display: none;
                     height: 100px;
                     width: 100px;
@@ -334,9 +388,10 @@ $border-color: rgb(218, 218, 218);
             display: flex;
             height: 70px;
 
-            .vsdata-type{
+            .vsdata-type {
                 display: flex;
-                .vsdata-type-item{
+
+                .vsdata-type-item {
                     height: 45px;
                     width: 110px;
                     background: linear-gradient(to right, rgba(213, 74, 74, .5) 35%, #FFF);
@@ -345,9 +400,19 @@ $border-color: rgb(218, 218, 218);
             }
         }
 
-        .sporting-info{
+        .sporting-info {
             display: flex;
-            height: 679px;
+            //height: 565px;
+            flex-direction: column;
+            .sporting-info-Win{
+                display: flex;
+
+            }
+
+            .sporting-info-Fail{
+                display: flex;
+
+            }
         }
     }
 }
