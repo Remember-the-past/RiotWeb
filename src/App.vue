@@ -1,7 +1,7 @@
 <template>
     <div class="container">
         <br/>
-        <div class="box">
+        <div class="box profile">
             <div class="profile-bar">
                 <div class="header-wrapper">
                     <div
@@ -49,6 +49,9 @@
                         <font-awesome-icon :icon="['fas', 'filter']"/>
                         <span>&nbsp;</span>
                         筛选
+                        <div class="sporting-header-title-filter">
+                            <img class="xxxxxxxxx" src="./assets/icon.jpg" height="100" width="100"/>
+                        </div>
                     </div>
                 </div>
                 <div class="sporting-list">
@@ -74,9 +77,10 @@
                         <div
                             class="vsdata-type-item"
                             v-for="(item) in vsdatatypeList"
-                            :class="{ key: item.key}"
+                            :class="{ key: item.key,value: item.value}"
                         >
-                            {{ item.key }}
+                            <div class="vsdata-type-title">{{ item.key }}</div>
+                            <div class="vsdata-type-desc">{{ item.value }}</div>
                         </div>
                     </div>
                 </div>
@@ -100,9 +104,17 @@ const Win = {
 
 let vsdatatypeList = reactive([
     {
-        key: "时间"
+        key: "时间",
+        value: "11-11 11:11"
     },{
-        key: "类型"
+        key: "类型",
+        value: "这是一个类型"
+    },{
+        key: "比赛时长",
+        value: "111分钟"
+    },{
+        key: "击杀",
+        value: "111/111"
     }
 ])
 
@@ -148,49 +160,56 @@ function handleClickSportingItem(item) {
 <style lang="scss" scoped>
 $border-color: rgb(218, 218, 218);
 
-.profile-bar {
+.profile{
+
     display: flex;
-    padding-left: 30px;
-
-    .header-wrapper {
-        width: 100px;
-        padding-top: 30px;
+    //height: 180px;
+    .profile-bar {
         display: flex;
-        flex-direction: column;
-        align-items: center;
+        padding-left: 30px;
 
-        .icon-wrapper {
-            height: 100px;
-            border-radius: 99px;
-            background: conic-gradient(rgb(97, 152, 253), rgb(97, 152, 253) 30%, rgb(219, 219, 219) 30%);
-            padding: 5px;
+        .header-wrapper {
+            width: 100px;
+            padding-top: 30px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
 
-            .header {
-                width: 100%;
-                height: 100%;
+            .icon-wrapper {
+                height: 100px;
                 border-radius: 99px;
+                background: conic-gradient(rgb(97, 152, 253), rgb(97, 152, 253) 30%, rgb(219, 219, 219) 30%);
+                padding: 5px;
+
+                .header {
+                    width: 100%;
+                    height: 100%;
+                    border-radius: 99px;
+                }
+            }
+
+            .score {
+                font-size: 13px;
+                margin-top: 5px;
+                padding: 2px 10px;
+                color: white;
+                font-weight: bold;
+                background-color: rgba(0, 0, 0, 0.767);
+                border-radius: 8px;
             }
         }
 
-        .score {
-            font-size: 13px;
-            margin-top: 5px;
-            padding: 2px 10px;
-            color: white;
-            font-weight: bold;
-            background-color: rgba(0, 0, 0, 0.767);
-            border-radius: 8px;
+        .summoner-info {
+            margin-left: 30px;
+            display: flex;
+            flex-direction: column;
+            align-items: self-start;
+            justify-content: space-between;
         }
     }
-
-    .summoner-info {
-        margin-left: 30px;
-        display: flex;
-        flex-direction: column;
-        align-items: self-start;
-        justify-content: space-between;
-    }
 }
+
+
 
 .sporting-wrapper {
     display: flex;
@@ -205,9 +224,9 @@ $border-color: rgb(218, 218, 218);
             justify-content: flex-end;
 
             .sporting-header-title:hover {
-                height: 100px;
-                width: 100px;
-                color: #0b0b0b;
+                .sporting-header-title-filter{
+                    display:inline-block;
+                }
             }
 
             .sporting-header-title {
@@ -215,6 +234,15 @@ $border-color: rgb(218, 218, 218);
                 align-items: center;
                 height: 16px;
                 width: 53px;
+
+                .sporting-header-title-filter{
+                    display: none;
+                    height: 100px;
+                    width: 100px;
+                    position: absolute;
+                    top: 300px;
+                    z-index: 1;
+                }
             }
         }
 
@@ -308,10 +336,18 @@ $border-color: rgb(218, 218, 218);
 
             .vsdata-type{
                 display: flex;
-                height: 45px;
-                width: 110px;
-                background: linear-gradient(to right, rgba(213, 74, 74, .5) 35%, #FFF);
+                .vsdata-type-item{
+                    height: 45px;
+                    width: 110px;
+                    background: linear-gradient(to right, rgba(213, 74, 74, .5) 35%, #FFF);
+                }
+
             }
+        }
+
+        .sporting-info{
+            display: flex;
+            height: 679px;
         }
     }
 }
