@@ -16,7 +16,8 @@
     "@fortawesome/vue-fontawesome": "prerelease",
     "axios": "^1.7.7",
     "bulma": "^1.0.2",
-    "vue": "^3.4.37"
+    "vue": "^3.4.37",
+    "vue-router": "^4.4.5"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^5.1.2",
