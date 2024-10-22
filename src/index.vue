@@ -44,6 +44,7 @@ async function GetPuuid(path, gameName, tagline) {
 }
 
 //单身壹族丶你武哥#81742
+//她说爱过我#75037
 function search() {
     // console.log("选中的区:", selectedOption.value);
     // console.log("召唤师名称:", summonerName.value);
@@ -58,9 +59,6 @@ function search() {
                 .then((res) => {
                     // 处理返回结果
                     const {puuid} = res.data[0];
-                    // console.log(res.data);
-                    // 可以在这里进行路由跳转或其他操作
-
                     router.push({ path: "/about", query: { environment : selectedOption.value,puuid: puuid,tagline: tagline } });
                 })
                 .catch((error) => {

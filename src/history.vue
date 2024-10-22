@@ -260,6 +260,16 @@ function handleClickSportingItem(item) {
     item.active = true
 }
 
+function gameName(path, puuid) {
+    const params = {
+        body: JSON.stringify({"puuids":[puuid]})
+    };
+    axios.post(path, params).then((res) => {
+        summonerData.value.name = res.data[0].game_name
+        summonerData.value.internalName = res.data[0].game_name
+    })
+}
+
 function gameHistory(path, environment, puuid) {
     const params = {
         environment: environment,
@@ -342,6 +352,7 @@ function summonerName(path, environment, puuid) {
 onMounted(()=>{
     summonerName('/api/summersByPuuids', environment, puuid);
     gameHistory('/api/gameHistory', environment, puuid);
+    gameName('/api/namesByPuuid',puuid);
 })
 
 </script>
