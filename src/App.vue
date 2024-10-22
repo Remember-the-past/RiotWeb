@@ -6,18 +6,18 @@
                 <div class="header-wrapper">
                     <div
                         class="icon-wrapper"
-                        :style="{ background: `conic-gradient(rgb(97, 152, 253), rgb(97, 152, 253) ${ratio}%, rgb(219, 219, 219) ${ratio}%) ` }"
+                        :style="{ background: `conic-gradient(rgb(97, 152, 253), rgb(97, 152, 253) ${summonerData.ratio}%, rgb(219, 219, 219) ${summonerData.ratio}%) ` }"
                     >
-                        <img class="header" src="./assets/icon.jpg"/>
+                        <img class="header" :src="summonerData.icon" />
                     </div>
-                    <div class="score">331</div>
+                    <div class="score">{{ summonerData.level }}</div>
                 </div>
                 <div class="summoner-info">
-                    <div class="tag is-light is-size-7"><b>2024赛季</b></div>
+                    <div class="tag is-light is-size-7"><b>{{ summonerData.currentYear }}赛季</b></div>
                     <div class="is-size-4">
-                        <b>哈哈哈</b>
+                        <b>{{ summonerData.internalName }}</b>
                         <span>&nbsp;</span>
-                        <span class="has-text-grey">#12345</span>
+                        <span class="has-text-grey">#{{ summonerData.tagline }}</span>
                     </div>
                     <div>
                         <span>当前生涯状态</span>
@@ -25,19 +25,19 @@
                         <span
                             class="tag has-text-white"
                             :class="{
-                                'is-warning': isPublic,
-                                'is-danger': !isPublic
+                                'is-warning': summonerData.isPublic,
+                                'is-danger': !summonerData.isPublic
                             }"
                         >
-                            公开
+                            {{ summonerData.puborpri }}
                         </span>
                     </div>
                     <div class="tag is-size-6">
                         <font-awesome-icon icon="user-secret"/>
                         <span>&nbsp;</span>
-                        联盟二区
+                        {{ summonerData.env }}
                     </div>
-                    <div class="has-text-grey is-size-7">上次在线时间2个月前</div>
+                    <div class="has-text-grey is-size-7">上次游戏时间 {{ summonerData.lastgametime }}</div>
                 </div>
             </div>
         </div>
@@ -110,10 +110,43 @@
 </template>
 
 <script setup>
-import {ref, reactive} from "vue"
+import {ref, reactive, onMounted} from "vue"
+import axios from "axios"
+let gameName="单身壹族丶你武哥";
+let tagline = "81742";
+const environment = ref('TJ101')
+let puuid = ref('b2704fda-f6bb-5b34-87ba-c005b1555603')
+let summonerData = ref({
+    accountId: '',
+    expPoints: '',
+    expToNextLevel: '',
+    id:'',
+    internalName: '',
+    isPublic: true,
+    lastGameDate: '',
+    level: '',
+    levelAndXpVersion: '',
+    name: '',
+    nameChangeFlag: false,
+    privacy: '隐藏',
+    profileIconId: '',
+    puborpri: '',
+    puuid: '',
+    revisionDate: '',
+    revisionId: '',
+    unnamed: '',
+    ratio: '0',
+    icon: '',
+    currentYear: 0,
+    lastgametime: '',
+    tagline: '',
+    env: ''
+})
 
-let ratio = ref(60)
-let isPublic = ref(true)
+let gameInfoList = ref({})
+// let puborpri = ref('')
+// let ratio = ref(60.000000001)
+// let isPublic = ref(true)
 const Win = {
     success: 'success',
     failed: 'failed',
@@ -178,38 +211,149 @@ let sportingList = reactive([
     {
         active: true,
         name: "Heloworld",
-        win: Win.success
-    },
-    {
-        name: "kitty",
-        win: Win.success
-    },
-    {
-        name: "Tom jack",
-        win: Win.success
-    },
-    {
-        name: "VMatrix",
-        win: Win.failed
-    },
-    {
-        name: "bbbbbb",
-        win: Win.none
-    },
-    {
-        name: "aaaaaaa",
-        win: Win.none
-    },
-    {
-        name: "6666666",
-        win: Win.success
+        win: Win.none,
+        icon: '',
+        describe: '重开'
     }
+    // },
+    // {
+    //     name: "kitty",
+    //     win: Win.none,
+    //     icon: '',
+    //     describe: '重开'
+    // },
+    // {
+    //     name: "Tom jack",
+    //     win: Win.none,
+    //     icon: '',
+    //     describe: '重开'
+    // },
+    // {
+    //     name: "VMatrix",
+    //     win: Win.none,
+    //     icon: '',
+    //     describe: '重开'
+    // },
+    // {
+    //     name: "bbbbbb",
+    //     win: Win.none,
+    //     icon: '',
+    //     describe: '重开'
+    // },
+    // {
+    //     name: "aaaaaaa",
+    //     win: Win.none,
+    //     icon: '',
+    //     describe: '重开'
+    // },
+    // {
+    //     name: "6666666",
+    //     win: Win.none,
+    //     icon: '',
+    //     describe: '重开'
+    // }
 ])
 
 function handleClickSportingItem(item) {
     sportingList.forEach(item => (item.active = false))
     item.active = true
 }
+
+function GetPuuid(path, gameName, tagline) {
+    const params = {
+        gameName: gameName,
+        tagLine: tagline
+    };
+    axios.get(path, {params}).then(res => {
+        puuid.value = res.data[0].puuid;
+    });
+}
+
+function gameHistory(path, environment, puuid) {
+    const params = {
+        environment: environment,
+        puuid: puuid
+    };
+    axios.get(path, {params}).then((res) => {
+        res.data.games.forEach((item,index) => {
+            if(index === 0){
+                console.log(item);
+            }
+        })
+    });
+}
+
+function summonerName(path, environment, puuid) {
+    const params = {
+        environment: environment,
+        body: JSON.stringify([puuid])
+    };
+    axios.post(path, params).then((res) => {
+        summonerData.value = res.data[0];
+        console.log(summonerData.value)
+        summonerData.value.isPublic = summonerData.value.privacy !== "PRIVATE";
+        if(summonerData.value.isPublic)
+        {
+            summonerData.value.puborpri = "公开"
+        }else{
+            summonerData.value.puborpri = "隐藏"
+        }
+        summonerData.value.ratio = summonerData.value.expPoints / summonerData.value.expToNextLevel * 100
+        summonerData.value.icon = "https://wegame.gtimg.com/g.26-r.c2d3c/helper/lol/assis/images/resources/usericon/"+summonerData.value.profileIconId+".png"
+        summonerData.value.currentYear = new Date().getFullYear()
+        const lastOnlineDate = new Date(summonerData.value.lastGameDate);
+        const now = new Date();
+        const diffTime = now - lastOnlineDate; // 毫秒差
+
+        const diffMinutes = Math.floor(diffTime / (1000 * 60)); // 转换为分钟
+        const diffHours = Math.floor(diffTime / (1000 * 60 * 60)); // 转换为小时
+        const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24)); // 转换为天
+        const diffMonths = Math.floor(diffDays / 30); // 转换为月份
+        const diffYears = Math.floor(diffMonths / 12); // 转换为年份
+
+        if (diffYears >= 1) {
+            summonerData.value.lastgametime = `${diffYears} 年前`;
+        } else if (diffMonths >= 1) {
+            summonerData.value.lastgametime = `${diffMonths} 个月前`;
+        } else if (diffDays >= 7) {
+            summonerData.value.lastgametime = `${Math.floor(diffDays / 7)} 周前`;
+        } else if (diffDays >= 3) {
+            summonerData.value.lastgametime = `${diffDays} 天前`;
+        } else if (diffDays >= 1) {
+            summonerData.value.lastgametime = `1 天前`;
+        } else if (diffHours >= 1) {
+            summonerData.value.lastgametime = `${diffHours} 小时前`;
+        } else if (diffMinutes >= 1) {
+            summonerData.value.lastgametime = `${diffMinutes} 分钟前`;
+        } else {
+            summonerData.value.lastgametime = `刚刚`;
+        }
+        summonerData.value.tagline = tagline
+        if (environment === "HN1") {
+            summonerData.value.env = "艾欧尼亚";
+        } else if (environment === "HN10") {
+            summonerData.value.env = "黑色玫瑰";
+        } else if (environment === "TJ100") {
+            summonerData.value.env = "联盟四区";
+        } else if (environment === "TJ101") {
+            summonerData.value.env = "联盟五区";
+        } else if (environment === "NJ100") {
+            summonerData.value.env = "联盟一区";
+        } else if (environment === "GZ100") {
+            summonerData.value.env = "联盟二区";
+        } else if (environment === "CQ100") {
+            summonerData.value.env = "联盟三区";
+        }
+    })
+}
+
+//单身壹族丶你武哥#81742
+onMounted(()=>{
+    // GetPuuid('/api/puuidByName', gameName, tagline)
+    summonerName('/api/summersByPuuids', environment.value, puuid.value);
+    gameHistory('/api/gameHistory', environment.value, puuid.value);
+})
+
 </script>
 
 <style lang="scss" scoped>
@@ -404,14 +548,31 @@ $border-color: rgb(218, 218, 218);
             display: flex;
             //height: 565px;
             flex-direction: column;
+
+            .sporting-info-base{
+                .sporting-info-item{
+                    flex-direction: column;
+                    .team-data-hd{
+                        display: flex;
+                    }
+                    .team-data-bd{
+                        display: flex;
+                    }
+                }
+            }
+
+
+
             .sporting-info-Win{
                 display: flex;
-
+                @extend .sporting-info-base;
+                background: linear-gradient(to right, rgba(42, 80, 207, 0.5) 35%, #FFF);
             }
 
             .sporting-info-Fail{
                 display: flex;
-
+                background: linear-gradient(to right, rgba(211, 184, 18, 0.5) 35%, #FFF);
+                @extend .sporting-info-base;
             }
         }
     }
