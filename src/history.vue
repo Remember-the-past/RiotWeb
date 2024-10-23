@@ -129,9 +129,9 @@ let summonerData = ref({
     levelAndXpVersion: '',
     name: '',
     nameChangeFlag: false,
-    privacy: '隐藏',
+    privacy: '',
     profileIconId: '',
-    puborpri: '',
+    puborpri: '隐藏',
     puuid: '',
     revisionDate: '',
     revisionId: '',
@@ -265,8 +265,8 @@ function gameName(path, puuid) {
         body: JSON.stringify({"puuids":[puuid]})
     };
     axios.post(path, params).then((res) => {
-        summonerData.value.name = res.data[0].game_name
-        summonerData.value.internalName = res.data[0].game_name
+        summonerData.value.name = res.data[0].alias.game_name
+        summonerData.value.internalName = res.data[0].alias.game_name
     })
 }
 
@@ -278,7 +278,7 @@ function gameHistory(path, environment, puuid) {
     axios.get(path, {params}).then((res) => {
         res.data.games.forEach((item,index) => {
             if(index === 0){
-                console.log(item);
+                // console.log(item);
             }
         })
     });
@@ -291,7 +291,6 @@ function summonerName(path, environment, puuid) {
     };
     axios.post(path, params).then((res) => {
         summonerData.value = res.data[0];
-        console.log(summonerData.value)
         summonerData.value.isPublic = summonerData.value.privacy !== "PRIVATE";
         if(summonerData.value.isPublic)
         {
@@ -345,14 +344,16 @@ function summonerName(path, environment, puuid) {
         } else if (environment === "CQ100") {
             summonerData.value.env = "联盟三区";
         }
+    }).catch((error)=>{
+        console.log(error);
     })
 }
 
 //单身壹族丶你武哥#81742
-onMounted(()=>{
-    summonerName('/api/summersByPuuids', environment, puuid);
-    gameHistory('/api/gameHistory', environment, puuid);
-    gameName('/api/namesByPuuid',puuid);
+onMounted(async ()=>{
+    await summonerName('/api/summersByPuuids', environment, puuid);
+    await gameHistory('/api/gameHistory', environment, puuid);
+    await gameName('/api/namesByPuuid',puuid);
 })
 
 </script>

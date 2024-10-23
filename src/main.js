@@ -2,6 +2,7 @@ import { createApp } from 'vue'
 import 'bulma'
 import App from './App.vue'
 import router from './router.js'
+import './assets/style.scss'
 
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
